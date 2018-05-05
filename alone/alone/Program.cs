@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Xml.Schema;
 using JetBrains.Annotations;
 
 namespace alone
@@ -20,29 +18,27 @@ namespace alone
             REVOLVER
         }
 
-        private const long OIL_OFFSET = 19856;
-        private const long RIFLE_OFFSET = 19866;
-        private const long HEALTH_OFFSET = 19882;
-        private const long REVOLVER_OFFSET = 20024;
-
-        private static readonly long[] offsets =
+        private static readonly KeyValuePair<Option, long>[] offsets =
         {
-            OIL_OFFSET,
-            RIFLE_OFFSET,
-            HEALTH_OFFSET,
-            REVOLVER_OFFSET,
+            new KeyValuePair<Option, long>(Option.OIL, 19856),
+            new KeyValuePair<Option, long>(Option.RIFLE, 19866),
+            new KeyValuePair<Option, long>(Option.HEALTH, 19882),
+            new KeyValuePair<Option, long>(Option.REVOLVER, 20024),
         };
 
         private static readonly long maxOffset;
 
+        private static readonly Dictionary<Option, string> options;
+
         static Program()
         {
-            maxOffset = offsets.Max();
+            maxOffset = offsets.Max(pair => pair.Value);
+            options = new Dictionary<Option, string>();
         }
 
-        private static Dictionary<Option, string> ParseArgs([NotNull] IEnumerable<string> args)
+        private static void ParseArgs([NotNull] IEnumerable<string> args)
         {
-            Dictionary<Option, string> options = new Dictionary<Option, string>();
+            options.Clear();
             foreach (string arg in args)
             {
                 foreach (Option option in Enum.GetValues(typeof(Option)))
@@ -54,13 +50,34 @@ namespace alone
                     }
                 }
             }
-
-            return options;
         }
-        
+
+        private static bool TryToParseByteOption(out byte value, Option option)
+        {
+            value = 0;
+            string optionValue;
+            if (!options.TryGetValue(option, out optionValue))
+            {
+                return false;
+            }
+
+            try
+            {
+                value = byte.Parse(optionValue);
+            }
+            catch (Exception e)
+            {
+               Console.WriteLine(e);
+               Console.WriteLine("Failed to parse byte value from '{0}'", optionValue);
+               return false;
+            }
+            return true;
+        }
+
         public static void Main(string[] args)
         {
-            Dictionary<Option, string> options = ParseArgs(args);
+            ParseArgs(args);
+
             foreach (KeyValuePair<Option,string> pair in options)
             {
                 Option option = pair.Key;
@@ -81,7 +98,7 @@ namespace alone
                 return;
             }
 
-            byte[] bytes = null;
+            byte[] bytes;
             try
             {
                 bytes = File.ReadAllBytes(path);
@@ -99,15 +116,42 @@ namespace alone
                 return;
             }
 
-            byte oil = bytes[OIL_OFFSET];
-            byte rifle = bytes[RIFLE_OFFSET];
-            byte health = bytes[HEALTH_OFFSET];
-            byte revolver = bytes[REVOLVER_OFFSET];
+            bool isDirty = false;
 
-            Console.WriteLine("Oil: " + oil);
-            Console.WriteLine("Rifle: " + rifle);
-            Console.WriteLine("Health: " + health);
-            Console.WriteLine("Revolver: " + revolver);
+            foreach (KeyValuePair<Option,long> pair in offsets)
+            {
+                Option option = pair.Key;
+                long offset = pair.Value;
+
+                byte oldValue = bytes[offset];
+                Console.WriteLine("Old value {0}={1}", option.ToString().ToLower(), oldValue);
+
+                byte newValue;
+                if (TryToParseByteOption(out newValue, option) && newValue != oldValue)
+                {
+                    isDirty = true;
+                    bytes[offset] = newValue;
+                    Console.WriteLine("New value {0}={1}", option.ToString().ToLower(), newValue);
+                }
+            }
+
+            if (isDirty)
+            {
+               return;
+            }
+
+            try
+            {
+                File.WriteAllBytes(path, bytes);
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e);
+                Console.WriteLine("Failed to write back cheated valued to '{0}'", path);
+                return;
+            }
+
+            Console.WriteLine("Success!");
         }
     }
 }
