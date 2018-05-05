@@ -135,7 +135,7 @@ namespace alone
                 }
             }
 
-            if (isDirty)
+            if (!isDirty)
             {
                return;
             }
