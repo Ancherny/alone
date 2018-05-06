@@ -61,10 +61,11 @@ namespace alone
                 if (TryToParseShortOption(out newValue, option) && newValue != oldValue)
                 {
                     isDirty = true;
+                    Console.WriteLine("New value {0}={1}", option.ToString().ToLower(), newValue);
+
                     newValue ^= XOR_VALUE;
                     bytes[offset] = (byte)(newValue & 0xFF);
                     bytes[offset+1] = (byte) (newValue >> 8 & 0xFF);
-                    Console.WriteLine("New value {0}={1}", option.ToString().ToLower(), newValue);
                 }
             }
 
