@@ -44,6 +44,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveGameEditor.cs" />
+    <Compile Include="SaveGameEditor1.cs" />
+    <Compile Include="SaveGameEditor2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
