@@ -16,6 +16,7 @@ namespace alone
         SHOTGUN,
         DERRINGER,
         GRACE,
+        RIOTGUN,
     }
 
     // ReSharper disable once ClassNeverInstantiated.Global

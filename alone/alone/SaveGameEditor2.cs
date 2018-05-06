@@ -15,6 +15,7 @@ namespace alone
                 new KeyValuePair<Option, long>(Option.HEALTH, 0x68C4),
                 new KeyValuePair<Option, long>(Option.REVOLVER, 0x68C6),
                 new KeyValuePair<Option, long>(Option.THOMPSON, 0x68B4),
+                new KeyValuePair<Option, long>(Option.RIOTGUN, 0x6C0E),
                 new KeyValuePair<Option, long>(Option.SHOTGUN, 0x6C1E),
                 new KeyValuePair<Option, long>(Option.DERRINGER, 0x68FC),
                 new KeyValuePair<Option, long>(Option.GRACE, 0x694E),
