@@ -11,7 +11,11 @@ namespace alone
         OIL,
         RIFLE,
         HEALTH,
-        REVOLVER
+        REVOLVER,
+        THOMPSON,
+        SHOTGUN,
+        DERRINGER,
+        GRACE,
     }
 
     // ReSharper disable once ClassNeverInstantiated.Global
