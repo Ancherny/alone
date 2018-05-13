@@ -17,6 +17,10 @@ namespace alone
         DERRINGER,
         GRACE,
         RIOTGUN,
+        WINCHESTER,
+        GATLING,
+        COLT,
+        HEALTH2,
     }
 
     // ReSharper disable once ClassNeverInstantiated.Global

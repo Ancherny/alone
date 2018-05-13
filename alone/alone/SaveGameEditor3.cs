@@ -6,19 +6,19 @@ namespace alone
 {
     internal class SaveGameEditor3 : SaveGameEditor
     {
-        private const short XOR_VALUE = 0x3535;
+        private const short XOR_VALUE = 0x0;
 
         public SaveGameEditor3([NotNull] Dictionary<Option, string> options) : base(options)
         {
             offsets = new []
             {
-                new KeyValuePair<Option, long>(Option.HEALTH, 0x68C4),
-                new KeyValuePair<Option, long>(Option.REVOLVER, 0x68C6),
-                new KeyValuePair<Option, long>(Option.THOMPSON, 0x68B4),
-                new KeyValuePair<Option, long>(Option.RIOTGUN, 0x6C0E),
-                new KeyValuePair<Option, long>(Option.SHOTGUN, 0x6C1E),
-                new KeyValuePair<Option, long>(Option.DERRINGER, 0x68FC),
-                new KeyValuePair<Option, long>(Option.GRACE, 0x694E),
+                new KeyValuePair<Option, long>(Option.HEALTH, 0xAE64),
+                new KeyValuePair<Option, long>(Option.REVOLVER, 0xB0CE),
+                new KeyValuePair<Option, long>(Option.WINCHESTER, 0xB0C6),
+                new KeyValuePair<Option, long>(Option.GATLING, 0xB1C0),
+                new KeyValuePair<Option, long>(Option.SHOTGUN, 0xB16A),
+                new KeyValuePair<Option, long>(Option.HEALTH2, 0xAE7A),
+                new KeyValuePair<Option, long>(Option.COLT, 0xB1EA),
             };
         }
 
