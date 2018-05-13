@@ -47,6 +47,7 @@
     <Compile Include="SaveGameEditor.cs" />
     <Compile Include="SaveGameEditor1.cs" />
     <Compile Include="SaveGameEditor2.cs" />
+    <Compile Include="SaveGameEditor3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

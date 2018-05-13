@@ -56,6 +56,11 @@ namespace alone
                     editor2.ApplyChanges();
                     break;
 
+                case "3":
+                    SaveGameEditor3 editor3 = new SaveGameEditor3(options);
+                    editor3.ApplyChanges();
+                    break;
+
                 default:
                     Console.WriteLine("Unexpected game part specified: '{0}'\n" +
                                       "Expected part values are [1,2]", part);
